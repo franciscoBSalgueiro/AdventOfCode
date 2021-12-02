@@ -14,6 +14,7 @@ for i, l in enumerate (linhas):
 print(tot-1)
 
 # Part 2
+
 tot = 0
 atual = 0
 for i, l in enumerate (linhas):
