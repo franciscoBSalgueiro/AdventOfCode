@@ -1,5 +1,3 @@
-from math import factorial
-
 with open("input.txt", "r") as file:
     nums=file.read().replace('\n','').split(",")
 
