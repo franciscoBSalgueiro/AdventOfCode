@@ -1,5 +1,3 @@
-from os import stat_result
-from pprint import  pprint
 with open("input.txt", "r") as file:
     linhas=file.read().split("\n")
 
