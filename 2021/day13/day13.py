@@ -38,9 +38,9 @@ def dobra(axis,n):
 for f in folds:
     dobra(f[0],int(f[1]))
 for j in range(6):
-    for i in range(40):
+    for i in range(39):
         if (i,j) in pontos:
-            print("#",end="")
+            print("█",end="")
         else:
-            print(".",end="")
+            print("░",end="")
     print()
