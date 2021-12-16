@@ -27,4 +27,4 @@ for i, l in enumerate(linhas):
         if j>0:
             g.add_edge(dim*(i)+j-1,dim*i+j,int(c))
 
-print(find_path(g,0,dim**2-1).total_cost)
+print(find_path(g,0,dim**2-1))
