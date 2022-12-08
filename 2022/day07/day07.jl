@@ -1,3 +1,5 @@
+module Day07
+
 mutable struct File
     name::String
     size::Int
@@ -7,7 +9,7 @@ mutable struct Dir
     name::String
     files::Vector{File}
     dirs::Vector{Dir}
-    parent::Union{Nothing, Dir}
+    parent::Union{Nothing,Dir}
     size::Int
 end
 
@@ -40,9 +42,9 @@ function getRoot(dir::Dir)
     return getRoot(dir.parent)
 end
 
-function parseInput()
+function parseInput(input)
     pwd = Dir("/", File[], Dir[], nothing, 0)
-    for line in eachline("input.txt")
+    for line in eachline(input)
         if startswith(line, "\$")
             if contains(line, "ls")
                 continue
@@ -65,43 +67,46 @@ function parseInput()
     return getRoot(pwd)
 end
 
+function part1(input="input.txt")
+    global total = 0
+    function part1Rec(dir::Dir)
+        for d in dir.dirs
+            part1Rec(d)
+            dir.size += d.size
+        end
+        for f in dir.files
+            dir.size += f.size
+        end
+        if (dir.size <= 100000)
+            total += dir.size
+        end
+    end
 
-total::Int = 0
-function part1(dir::Dir)
-    global total
-    for d in dir.dirs
-        part1(d)
-        dir.size += d.size
-    end
-    for f in dir.files
-        dir.size += f.size
-    end
-    if (dir.size <= 100000)
-        total += dir.size
-    end
+    root = parseInput(input)
+    part1Rec(root)
+    println(total)
 end
 
-min_space::Int = typemax(Int)
 const needed_space = 3636666
+function part2(input="input.txt")
+    global min_space = typemax(Int)
 
-function part2(dir::Dir)
-    global min_space
-    for d in dir.dirs
-        part2(d)
-        dir.size += d.size
+    function part2Rec(dir::Dir)
+        for d in dir.dirs
+            part2Rec(d)
+            dir.size += d.size
+        end
+        for f in dir.files
+            dir.size += f.size
+        end
+        if (dir.size >= needed_space)
+            min_space = min(min_space, dir.size)
+        end
     end
-    for f in dir.files
-        dir.size += f.size
-    end
-    if (dir.size >= needed_space)
-        min_space = min(min_space, dir.size)
-    end
+
+    root = parseInput(input)
+    part2Rec(root)
+    println(min_space)
 end
 
-root = parseInput()
-part1(root)
-println(total)
-
-root = parseInput()
-part2(root)
-println(min_space)
+end

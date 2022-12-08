@@ -1,7 +1,9 @@
-function solver(reversed)
+module Day05
+
+function solver(reversed, input)
     cargo = []
 
-    for line in eachline("input.txt")
+    for line in eachline(input)
         if startswith(line, "[") || (startswith(line, " ") && !isnumeric(line[2]))
             i = 2
             j = 1
@@ -32,13 +34,12 @@ function solver(reversed)
     println(join(last.(cargo)))
 end
 
-function part1()
-    solver(true)
+function part1(input = "input.txt")
+    solver(true, input)
 end
 
-function part2()
-    solver(false)
+function part2(input = "input.txt")
+    solver(false, input)
 end
 
-part1()
-part2()
+end

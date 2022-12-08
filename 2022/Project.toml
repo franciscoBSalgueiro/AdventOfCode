@@ -1,0 +1,8 @@
+name = "aoc"
+uuid = "682d40bb-e53f-433c-91ce-ae46d2906d9f"
+authors = ["Francisco Salgueiro <fgcdbs@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+Suppressor = "fd094767-a336-5f1f-9728-57cf17d0bbfb"

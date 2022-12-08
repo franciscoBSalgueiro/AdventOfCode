@@ -1,3 +1,5 @@
+module Day03
+
 function common_letters(v)
   for n in v[1]
     all(n ∈ x for x in v[2:end]) && return n
@@ -12,9 +14,9 @@ function letter_value(letter)
   end
 end
 
-function part1()
+function part1(input = "input.txt")
   rucksacks = []
-  for line in eachline("input.txt")
+  for line in eachline(input)
     half = div(length(line), 2)
     half_lines = (line[1:half], line[half+1:end])
     l = common_letters(half_lines)
@@ -23,8 +25,8 @@ function part1()
   println(sum(letter_value.(rucksacks)))
 end
 
-function part2()
-  lines = readlines("input.txt")
+function part2(input = "input.txt")
+  lines = readlines(input)
   rucksacks = []
   group = []
   for (i, line) in enumerate(lines)
@@ -38,5 +40,4 @@ function part2()
   println(sum(letter_value.(rucksacks)))
 end
 
-part1()
-part2()
+end

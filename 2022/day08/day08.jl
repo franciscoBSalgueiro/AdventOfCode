@@ -1,5 +1,7 @@
-function parseInput()
-    lines = readlines("input.txt")
+module Day08
+
+function parseInput(input)
+    lines = readlines(input)
     ll = collect.(lines)
     m = parse.(Int, hcat(ll...))
     return m
@@ -100,7 +102,8 @@ function scenicScore(m, I)
 
 end
 
-function part1(m)
+function part1(input = "input.txt")
+    m = parseInput(input)
     R = CartesianIndices(m)
     total = 0
     for I in R
@@ -111,7 +114,8 @@ function part1(m)
     println(total)
 end
 
-function part2(m)
+function part2(input = "input.txt")
+    m = parseInput(input)
     R = CartesianIndices(m)
     max = 0
     for I in R
@@ -123,6 +127,4 @@ function part2(m)
     println(max)
 end
 
-m = parseInput()
-part1(m)
-part2(m)
+end

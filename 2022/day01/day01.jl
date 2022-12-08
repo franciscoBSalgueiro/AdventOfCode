@@ -1,7 +1,9 @@
-function part1()
+module Day01
+
+function part1(input = "input.txt")
     max_elfs = 0
     local_max = 0
-    for line in eachline("input.txt")
+    for line in eachline(input)
         if line == ""
             if local_max > minimum(max_elfs)
                 max_elfs = local_max
@@ -17,10 +19,10 @@ function part1()
     println(max_elfs)
 end
 
-function part2()
+function part2(input = "input.txt")
     max_elfs = zeros(Int, 3)
     local_max = 0
-    for line in eachline("input.txt")
+    for line in eachline(input)
         if line == ""
             if local_max > minimum(max_elfs)
                 max_elfs[findmin(max_elfs)[2]] = local_max
@@ -36,5 +38,4 @@ function part2()
     println(sum(max_elfs))
 end
 
-part1()
-part2()
+end

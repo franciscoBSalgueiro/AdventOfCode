@@ -1,5 +1,7 @@
-function solver(n)
-    data = read("input.txt")
+module Day06
+
+function solver(n, input)
+    data = read(input)
     start = 1
     ending = n
     while ending <= lastindex(data)
@@ -12,13 +14,12 @@ function solver(n)
     end
 end
 
-function part1()
-    solver(4)
+function part1(input = "input.txt")
+    solver(4, input)
 end
 
-function part2()
-    solver(14)
+function part2(input = "input.txt")
+    solver(14, input)
 end
 
-part1()
-part2()
+end

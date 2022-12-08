@@ -1,6 +1,8 @@
-function part1()
+module Day02
+
+function part1(input = "input.txt")
     score = 0
-    for line in eachline("input.txt")
+    for line in eachline(input)
         a, b = split(line, ' ')
         if b == "X"
             if a == "C"
@@ -43,9 +45,9 @@ function part1()
     println(score)
 end
 
-function part2()
+function part2(input = "input.txt")
     score = 0
-    for line in eachline("input.txt")
+    for line in eachline(input)
         a, b = split(line, ' ')
         if b == "X"
             if a == "C"
@@ -80,5 +82,4 @@ function part2()
     println(score)
 end
 
-part1()
-part2()
+end
