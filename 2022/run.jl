@@ -90,7 +90,6 @@ end
 @eval begin
     printstyled("Day $(ARGS[1]):\n", bold=true, underline=true)
     for p in part
-        print("P$p: ")
         display($dayFn(p))
     end
 end

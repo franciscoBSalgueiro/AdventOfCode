@@ -41,3 +41,8 @@ end
     @test day08(1) == 1785
     @test day08(2) == 345168
 end
+
+@testset "Day 9" begin
+    @test day09(1) == 6266
+    @test day09(2) == 2369
+end
