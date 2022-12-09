@@ -14,7 +14,7 @@ function letter_value(letter)
   end
 end
 
-function part1(input = "input.txt")
+function part1(input="input.txt")
   rucksacks = []
   for line in eachline(input)
     half = div(length(line), 2)
@@ -22,10 +22,10 @@ function part1(input = "input.txt")
     l = common_letters(half_lines)
     push!(rucksacks, l)
   end
-  println(sum(letter_value.(rucksacks)))
+  return sum(letter_value.(rucksacks))
 end
 
-function part2(input = "input.txt")
+function part2(input="input.txt")
   lines = readlines(input)
   rucksacks = []
   group = []
@@ -37,7 +37,7 @@ function part2(input = "input.txt")
       group = []
     end
   end
-  println(sum(letter_value.(rucksacks)))
+  return sum(letter_value.(rucksacks))
 end
 
 end

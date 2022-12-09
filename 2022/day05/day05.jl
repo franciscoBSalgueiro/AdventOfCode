@@ -31,15 +31,15 @@ function solver(reversed, input)
         end
 
     end
-    println(join(last.(cargo)))
+    return join(last.(cargo))
 end
 
 function part1(input = "input.txt")
-    solver(true, input)
+    return solver(true, input)
 end
 
 function part2(input = "input.txt")
-    solver(false, input)
+    return solver(false, input)
 end
 
 end

@@ -1,3 +1,13 @@
+# Usage of run.jl
+
+Options:
+```
+ - a: run all days
+ - t: run tests
+ - b [day] [part]: run benchmarks
+ - r <day> [part]: run day and part
+```
+
 # Benchmarks
 
 |  Day | Part |       Time | Allocated memory |

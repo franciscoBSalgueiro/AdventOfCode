@@ -6,6 +6,24 @@ using BenchmarkTools
 Pkg.activate(@__DIR__)
 using aoc
 
+if length(ARGS) == 0 || ARGS[1] == "a"
+    # run all days
+    for day in aoc.solvedDays
+        local daySymbol = Symbol("day" * lpad(day, 2, "0"))
+        printstyled("Day $day:\n", bold=true, underline=true)
+        print("P1: ")
+        println(@eval $daySymbol(1))
+        print("P2: ")
+        println(@eval $daySymbol(2))
+    end
+    exit(0)
+end
+
+if ARGS[1] == "t"
+    Pkg.test()
+    exit(0)
+end
+
 # Write the benchmark results into a markdown string:
 function _to_markdown_table(bresults)
     header = "| Day | Part | Time | Allocated memory |\n" *
@@ -22,21 +40,29 @@ function _to_markdown_table(bresults)
 end
 
 if ARGS[1] == "b"
-    if length(ARGS) == 3
+    if length(ARGS) >= 2
         day = parse(Int, ARGS[2])
-        part = parse(Int, ARGS[3])
+        if length(ARGS) == 3
+            part = [parse(Int, ARGS[3])]
+        else
+            part = 1:2
+        end
         local daySymbol = Symbol("benchmarkDay" * lpad(day, 2, "0"))
-        println("Day $day - part $part:")
-        display(@eval $daySymbol(part))
+        @eval begin
+            for p in part
+                println("Day $day - part $p:")
+                display($daySymbol(p))
+            end
+        end
     else
         results = []
         for day in aoc.solvedDays
             local daySymbol = Symbol("benchmarkDay" * lpad(day, 2, "0"))
+            printstyled("Day $day - part 1:\n", bold=true, underline=true)
             r = @eval $daySymbol(1)
-            println("Day $day - part 2:")
             display(r)
             push!(results, (day, 1, time(r), memory(r)))
-            println("Day $day - part 2:")
+            printstyled("Day $day - part 2:\n", bold=true, underline=true)
             r = @eval $daySymbol(2)
             display(r)
             push!(results, (day, 2, time(r), memory(r)))
@@ -49,13 +75,22 @@ end
 
 ds = lpad(parse(Int, ARGS[1]), 2, "0")
 dayFn = Symbol("day" * ds)
-part = parse(Int, ARGS[2])
 
-if (part != 1) && (part != 2)
-    error("Invalid part number")
+if length(ARGS) == 2
+    part = parse(Int, ARGS[2])
+    if (part != 1) && (part != 2)
+        @error "Invalid part number (must be 1 or 2)"
+        exit(1)
+    end
+    part = [part]
+else
+    part = 1:2
 end
 
 @eval begin
-    $dayFn(part)
+    printstyled("Day $(ARGS[1]):\n", bold=true, underline=true)
+    for p in part
+        print("P$p: ")
+        display($dayFn(p))
+    end
 end
-

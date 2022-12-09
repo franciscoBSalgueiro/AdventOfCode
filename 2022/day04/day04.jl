@@ -16,15 +16,15 @@ function solver(check, input)
             total += 1
         end
     end
-    println(total)
+    return total
 end
 
 function part1(input = "input.txt")
-    solver(contained, input)
+    return solver(contained, input)
 end
 
 function part2(input = "input.txt")
-    solver(overlaps, input)
+    return solver(overlaps, input)
 end
 
 end

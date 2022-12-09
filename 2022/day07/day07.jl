@@ -84,7 +84,7 @@ function part1(input="input.txt")
 
     root = parseInput(input)
     part1Rec(root)
-    println(total)
+    return total
 end
 
 const needed_space = 3636666
@@ -106,7 +106,7 @@ function part2(input="input.txt")
 
     root = parseInput(input)
     part2Rec(root)
-    println(min_space)
+    return min_space
 end
 
 end

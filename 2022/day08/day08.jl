@@ -111,7 +111,7 @@ function part1(input = "input.txt")
             total += 1
         end
     end
-    println(total)
+    return total
 end
 
 function part2(input = "input.txt")
@@ -124,7 +124,7 @@ function part2(input = "input.txt")
             max = score
         end
     end
-    println(max)
+    return max
 end
 
 end

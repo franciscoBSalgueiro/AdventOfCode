@@ -16,7 +16,7 @@ function part1(input = "input.txt")
         local_max += v
     end
 
-    println(max_elfs)
+    return max_elfs
 end
 
 function part2(input = "input.txt")
@@ -35,7 +35,7 @@ function part2(input = "input.txt")
         local_max += v
     end
 
-    println(sum(max_elfs))
+    return sum(max_elfs)
 end
 
 end
