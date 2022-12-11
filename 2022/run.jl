@@ -1,10 +1,11 @@
 #!/usr/bin/julia
 
 using Pkg
-using BenchmarkTools
 
 Pkg.activate(@__DIR__)
+
 using aoc
+using BenchmarkTools
 
 if length(ARGS) == 0 || ARGS[1] == "a"
     # run all days
