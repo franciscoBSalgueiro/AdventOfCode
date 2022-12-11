@@ -3,9 +3,7 @@ module aoc
 using BenchmarkTools
 using Suppressor
 
-dirs = readdir(joinpath(@__DIR__, ".."))
-solvedDays = filter(x -> occursin(r"day\d\d", x), dirs)
-solvedDays = map(x -> parse(Int, x[4:5]), solvedDays)
+solvedDays = 1:11
 
 for day in solvedDays
     dayString = "day" * lpad(day, 2, '0')
