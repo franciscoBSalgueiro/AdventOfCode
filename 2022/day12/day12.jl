@@ -34,17 +34,9 @@ function calculateDistance(start, finish, elevations)
         if pos == finish
             return depth
         end
-        neighbors = [
-            CartesianIndex(pos[1] - 1, pos[2]),
-            CartesianIndex(pos[1] + 1, pos[2]),
-            CartesianIndex(pos[1], pos[2] - 1),
-            CartesianIndex(pos[1], pos[2] + 1)
-        ]
-        for n in neighbors
-            if (n[1] < 1 || n[1] > size(elevations)[1]) || (n[2] < 1 || n[2] > size(elevations)[2] || n in visited)
-                continue
-            end
-            if canTravel(elevations[pos], elevations[n])
+        for δ in [(0, 1), (0, -1), (1, 0), (-1, 0)]
+            n = pos + CartesianIndex(δ)
+            if checkbounds(Bool, elevations, n) && canTravel(elevations[pos], elevations[n]) && n ∉ visited
                 push!(queue, (pos=n, depth=depth + 1))
                 push!(visited, n)
             end
@@ -64,7 +56,7 @@ function part2(input="input.txt")
     elevations, letters, finish = parseInput(input)
     startingPositions = findall(letters .== 'a')
 
-    min([calculateDistance(pos, finish, elevations) for pos in startingPositions]...) 
+    min([calculateDistance(pos, finish, elevations) for pos in startingPositions]...)
 end
 
 end
