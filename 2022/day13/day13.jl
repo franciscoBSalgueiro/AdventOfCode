@@ -1,16 +1,18 @@
 module Day13
 
+using JSON3
+
 function parseInput(input)
     packets = []
     for line in eachline(input)
         if line != ""
-            push!(packets, eval(Meta.parse(line)))
+            push!(packets, JSON3.read(line))
         end
     end
     return packets
 end
 
-function compare(a::Vector, b::Vector)
+function compare(a::AbstractArray, b::AbstractArray)
     for (x₁, x₂) in zip(a, b)
         c = compare(x₁, x₂)
         if c != 0
@@ -21,8 +23,8 @@ function compare(a::Vector, b::Vector)
 end
 
 compare(a::Int, b::Int) = sign(a - b)
-compare(a::Vector, b::Int) = compare(a, [b])
-compare(a::Int, b::Vector) = compare([a], b)
+compare(a::AbstractArray, b::Int) = compare(a, [b])
+compare(a::Int, b::AbstractArray) = compare([a], b)
 
 function part1(input="input.txt")
     packets = parseInput(input)
@@ -37,11 +39,15 @@ end
 
 function part2(input="input.txt")
     packets = parseInput(input)
-    push!(packets, [[2]], [[6]])
-    sort!(packets, lt=(a, b) -> compare(a, b) < 0)
-
-    aᵢ = findfirst(isequal([[2]]), packets)
-    bᵢ = findfirst(isequal([[6]]), packets)
+    aᵢ, bᵢ = 1, 2
+    for p in packets
+        if compare(p, [[2]]) <= 0
+            aᵢ += 1
+            bᵢ += 1
+        elseif compare(p, [[6]]) <= 0
+            bᵢ += 1
+        end
+    end
 
     return aᵢ * bᵢ
 end
