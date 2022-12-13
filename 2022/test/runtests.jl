@@ -68,3 +68,8 @@ end
     @test day12(1) == 462
     @test day12(2) == 451
 end
+
+@testset "Day 13" begin
+    @test day13(1) == 6369
+    @test day13(2) == 25800
+end
