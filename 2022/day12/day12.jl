@@ -9,29 +9,21 @@ function letterToNumber(letter)
     return letter - 'a' + 1
 end
 
-function canTravel(v1, v2)
-    if v2 - v1 > 1
-        return false
-    end
-    return true
-end
-
 function parseInput(input)
     lines = readlines(input)
     letters = hcat(collect.(lines)...)
     elevations = letterToNumber.(letters)
-    finish = findfirst(letters .== 'E')
-    return elevations, letters, finish
+    return elevations, letters
 end
 
-function calculateDistance(start, finish, elevations)
+function calculateDistance(start, elevations, finishTest, canTravel)
     queue = [(pos=start, depth=0)]
     visited = Set{CartesianIndex{2}}()
     push!(visited, start)
 
     while !isempty(queue)
         (pos, depth) = popfirst!(queue)
-        if pos == finish
+        if finishTest(pos)
             return depth
         end
         for δ in [(0, 1), (0, -1), (1, 0), (-1, 0)]
@@ -46,17 +38,18 @@ function calculateDistance(start, finish, elevations)
 end
 
 function part1(input="input.txt")
-    elevations, letters, finish = parseInput(input)
+    elevations, letters = parseInput(input)
     start = findfirst(letters .== 'S')
-    calculateDistance(start, finish, elevations)
+    finish = findfirst(letters .== 'E')
+    canTravel = (a, b) -> b - a <= 1
+    calculateDistance(start, elevations, x -> x == finish, canTravel)
 end
 
-
 function part2(input="input.txt")
-    elevations, letters, finish = parseInput(input)
-    startingPositions = findall(letters .== 'a')
-
-    min([calculateDistance(pos, finish, elevations) for pos in startingPositions]...)
+    elevations, letters = parseInput(input)
+    start = findfirst(letters .== 'E')
+    canTravel = (a, b) -> a - b <= 1
+    calculateDistance(start, elevations, x -> elevations[x] == 1, canTravel)
 end
 
 end
