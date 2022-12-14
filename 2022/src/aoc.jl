@@ -3,7 +3,7 @@ module aoc
 using BenchmarkTools
 using Suppressor
 
-solvedDays = 1:13
+solvedDays = 1:14
 
 for day in solvedDays
     dayString = "day" * lpad(day, 2, '0')
