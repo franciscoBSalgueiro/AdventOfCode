@@ -1,20 +1,17 @@
 use std::collections::HashMap;
 
-use crate::utils::*;
-
-use aoc_runner_derive::{aoc, aoc_generator};
-use nom::{bytes::complete::tag, character::complete::digit0, multi::separated_list1, IResult};
+use aoc_runner_derive::aoc;
 
 fn parse_hand1(s: &str) -> Hand1 {
     let x = s.split_whitespace().collect::<Vec<_>>();
-    let cards = x[0].chars().map(|c| Card1::from_char(c)).collect();
+    let cards = x[0].chars().map(Card1::from_char).collect();
     let bid = x[1].parse::<u64>().unwrap();
     Hand1 { cards, bid }
 }
 
 fn parse_hand2(s: &str) -> Hand2 {
     let x = s.split_whitespace().collect::<Vec<_>>();
-    let cards = x[0].chars().map(|c| Card2::from_char(c)).collect();
+    let cards = x[0].chars().map(Card2::from_char).collect();
     let bid = x[1].parse::<u64>().unwrap();
     Hand2 { cards, bid }
 }
@@ -28,6 +25,21 @@ enum Kind {
     FullHouse,
     FourOfAKind,
     FiveOfAKind,
+}
+
+impl Kind {
+    fn from_counts(counts: &[u64]) -> Kind {
+        match counts {
+            [1, 1, 1, 1, 1] => Kind::HighCard,
+            [1, 1, 1, 2] => Kind::OnePair,
+            [1, 2, 2] => Kind::TwoPair,
+            [1, 1, 3] => Kind::ThreeOfAKind,
+            [2, 3] => Kind::FullHouse,
+            [1, 4] => Kind::FourOfAKind,
+            [5] => Kind::FiveOfAKind,
+            _ => panic!("Invalid hand"),
+        }
+    }
 }
 
 #[derive(PartialEq, Eq, Debug, Clone, PartialOrd, Ord, Hash)]
@@ -99,16 +111,7 @@ impl Hand1 {
         counts.sort_by(|a, b| b.1.cmp(&a.1));
         let mut counts = counts.into_iter().map(|(_, v)| v).collect::<Vec<_>>();
         counts.sort();
-        match counts.as_slice() {
-            [1, 1, 1, 1, 1] => Kind::HighCard,
-            [1, 1, 1, 2] => Kind::OnePair,
-            [1, 2, 2] => Kind::TwoPair,
-            [1, 1, 3] => Kind::ThreeOfAKind,
-            [2, 3] => Kind::FullHouse,
-            [1, 4] => Kind::FourOfAKind,
-            [5] => Kind::FiveOfAKind,
-            _ => panic!("Invalid hand"),
-        }
+        Kind::from_counts(&counts)
     }
 }
 impl Hand2 {
@@ -153,16 +156,7 @@ impl Hand2 {
             counts.sort_by(|a, b| b.1.cmp(&a.1));
             let mut counts = counts.into_iter().map(|(_, v)| v).collect::<Vec<_>>();
             counts.sort();
-            let kind = match counts.as_slice() {
-                [1, 1, 1, 1, 1] => Kind::HighCard,
-                [1, 1, 1, 2] => Kind::OnePair,
-                [1, 2, 2] => Kind::TwoPair,
-                [1, 1, 3] => Kind::ThreeOfAKind,
-                [2, 3] => Kind::FullHouse,
-                [1, 4] => Kind::FourOfAKind,
-                [5] => Kind::FiveOfAKind,
-                _ => panic!("Invalid hand"),
-            };
+            let kind = Kind::from_counts(&counts);
             if kind > best_kind {
                 best_kind = kind;
             }
@@ -237,11 +231,11 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(&TEST_INPUT), 6440);
+        assert_eq!(part1(TEST_INPUT), 6440);
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(&TEST_INPUT), 5905);
+        assert_eq!(part2(TEST_INPUT), 5905);
     }
 }
