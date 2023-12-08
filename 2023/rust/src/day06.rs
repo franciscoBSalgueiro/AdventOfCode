@@ -1,7 +1,7 @@
 use crate::utils::*;
 
 use aoc_runner_derive::{aoc, aoc_generator};
-use nom::{bytes::complete::tag, character::complete::digit0, multi::separated_list1, IResult};
+use nom::{bytes::complete::tag, IResult};
 
 type Input = Problem;
 
